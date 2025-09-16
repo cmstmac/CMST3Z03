@@ -8,8 +8,8 @@ const App = {
       tab: 0,
       workshops: [
         { title: "Workshop 1: Explore A Simple Soundwalk", icon: "mdi-walk" },
-        { title: "Workshop 2: Creating Sound Recordings for a Soundwalk", icon: "mdi-music-note" },
-        { title: "Workshop 3: Creating Soundwalks", icon: "mdi-map-marker" }
+        { title: "Workshop 2: Collecting Sound Recordings for a Soundwalk", icon: "mdi-music-note" },
+        { title: "Workshop 3: Creating Soundwalks with Echoes Creator", icon: "mdi-map-marker" }
       ]
     };
   }
