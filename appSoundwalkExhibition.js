@@ -559,12 +559,12 @@ createApp({
 
     template: `
     <v-app>
-      <v-app-bar color="#7A003C" prominent>
+      <v-app-bar color="#7A003C" prominent >
         <v-app-bar-title>🎧 Soundwalk Exhibition</v-app-bar-title>
       </v-app-bar>
 
       <v-main class="pa-6">
-        <div   class="instructions mt-15">
+    <!--     <div   class="instructions mt-15">
           <h3>Instructions:</h3>
           <ol>
             <li>With your soundwalk partner, explore the other teams’ soundwalks on this webpage and choose one to listen to.</li>
@@ -572,16 +572,16 @@ createApp({
             <li>Scan the QR code for your selected soundwalk and go out to listen to it.</li>
             <li>After you finish listening to your first soundwalk, repeat steps 1–3 to select and listen to a second one.</li>
           </ol>
-        </div>
+        </div> -->
 
-        <v-container>
-          <v-row>
+        <v-container class="mt-15">
+          <v-row >
             <v-col
               v-for="sw in soundwalks"
               :key="sw.id"
               cols="12"
               md="6"
-              class="soundwalk-card"
+              class="soundwalk-card "
             >
               <v-card elevation="4">
                 <v-card-text>
