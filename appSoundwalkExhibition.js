@@ -624,7 +624,7 @@ createApp({
                   </div>
 
                     <!-- team 1 -->
-                  <div >
+             <!--     <div >
                     <p>Team 1</p>
                 <v-text-field
                     v-model="newListenerNameOne[sw.id]"
@@ -643,10 +643,10 @@ createApp({
                   >
                     Submit 
                   </v-btn>
-               <div>
+               <div> -->
 
                      <!-- team 2 -->
-                     <div>
+               <!--       <div>
                     <p>Team 2</p>
                 <v-text-field
                     v-model="newListenerNameTwo[sw.id]"
@@ -665,7 +665,7 @@ label="Team members' names"
                   >
                     Submit 
                   </v-btn>
-               <div>
+               <div> -->
                 </v-card-text>
               </v-card>
             </v-col>
