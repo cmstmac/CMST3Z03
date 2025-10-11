@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMST 3Z03 -Group Project 2: Tracing Civic Mobility</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 1em;
+            color: #2c3e50;
+            border-bottom: 3px solid #ff416c;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .project-overview {
+            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .project-overview h2 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .learning-outcomes {
+            background: #f8f9fa;
+            /* very light coral/pink */
+            border-left: 5px solid #ff416c;
+            /* matches the gradient */
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+
+        .learning-outcomes h3 {
+            color: black;
+            margin-top: 0;
+        }
+
+        .project-stages {
+            display: grid;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .stage-card {
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .stage-card.active {
+            border-color: #3498db;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.2);
+        }
+
+        .stage-card.completed {
+            border-color: #28a745;
+            background: #f8fff9;
+        }
+
+        .stage-card.upcoming {
+            border-color: #ffc107;
+            background: #fffbf0;
+        }
+
+        .stage-header {
+            padding: 20px;
+            background: #f8f9fa;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .stage-header:hover {
+            background: #e9ecef;
+        }
+
+        .stage-card.active .stage-header {
+            background: #3498db;
+            color: white;
+        }
+
+        .stage-card.completed .stage-header {
+            background: #28a745;
+            color: white;
+        }
+
+        .stage-card.upcoming .stage-header {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .stage-title {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .stage-meta {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .expand-icon {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .stage-content {
+            display: none;
+            padding: 30px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .stage-content.expanded {
+            display: block;
+        }
+
+        .stage-content.expanded+.stage-header .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .requirement-box {
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .assessment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .assessment-table th,
+        .assessment-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .assessment-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-active {
+            background: #3498db;
+            color: white;
+        }
+
+        .status-completed {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-upcoming {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+
+        .stages-timeline {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .timeline-item {
+            flex: 1;
+            min-width: 150px;
+            padding: 10px;
+            text-align: center;
+            border-radius: 6px;
+            font-size: 0.9em;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .current-focus {
+            background: #fff2e5;
+            /* very light apricot/pale orange */
+            border: 2px solid #ff4b2b;
+            /* echoing the darker gradient red */
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .stages-timeline {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>CMST 3Z03 - Mobile Practices, Technologies and Art</h1>
+
+        <div class="project-overview">
+            <h2>Group Project 2: Tracing Civic Mobility (35% total)</h2>
+            <p>Working in pairs (2 people), you will create a GPS drawing by physically moving through space
+                to represent "breadcrumbs"—inadvertent traces that migrants and other mobile subjects leave behind.
+                Your GPS drawing should connect or respond to topics of weeks 7-10</p>
+
+            <p><strong>What is GPS drawing?</strong> Also known as <i>GPS art</i>, is a method of drawing where an
+                artist uses a
+                Global Positioning System (GPS) device and follows a pre-planned route to create a large-scale picture
+                or pattern. The .GPX data file recorded during the drawing process is then visualised, usually
+                overlaying it as a line on a map of the area. Artists usually run or cycle the route—while cars, vans,
+                boats and aeroplanes are utilized to create larger pieces. <a
+                    href="https://en.wikipedia.org/wiki/GPS_drawing" target="_blank"
+                    style="color: #fff; text-decoration: underline;">Learn more</a></p>
+        </div>
+
+        <div class="learning-outcomes">
+            <h3>Overall Learning Outcomes</h3>
+            <p>By completing this project, students will:</p>
+            <ol>
+                <li><strong>Create site-specific GPS art:</strong> Develop technical proficiency in route planning, GPS
+                    tracking, and spatial mapping to produce original artworks that reveal unexpected patterns and
+                    “breadcrumbs” in urban or public spaces.</li>
+                <li><strong>Collaborate effectively in creative contexts:</strong> Work productively with a partner to
+                    combine individual ideas into cohesive GPS drawings, while providing and integrating constructive
+                    feedback throughout the creative process.</li>
+                <li><strong>Connect artistic practice to theoretical frameworks:</strong> Explore how movement-based art
+                    engages with concepts of mobility, migration, and civic engagement, demonstrating understanding of
+                    how creative work can illuminate social, spatial, and cultural ideas.</li>
+                <li><strong>Reflect critically on creative learning:</strong> Articulate and justify creative decisions,
+                    evaluate different approaches to GPS drawing, and analyze personal and collaborative growth through
+                    both project exhibitions and written reflections.</li>
+            </ol>
+        </div>
+
+
+        <div class="stages-timeline">
+            <!-- <div class="timeline-item status-completed">Part 1: Sep 8<br>Proposals</div> -->
+            <div class="timeline-item status-active"><b>Part 1: Oct 27<br>Proposal & Concept Development (5%)</b>
+                <br>
+                Individual
+                Submission
+            </div>
+            <div class="timeline-item status-upcoming"><b>Part 2: Nov 3<br>Materials Collection (5%)</b> <br>
+                Individual
+                Submission</div>
+            <div class="timeline-item status-upcoming"><b>Part 3: Nov 10<br>Final Artistic Composition (10%)</b> <br>
+                Pair
+                Submission</div>
+            <div class="timeline-item status-upcoming"><b>Part 4: Nov 18<br>In-class Exhibition (5%)</b> <br> Pair
+                Participation
+            </div>
+            <!-- <div class="timeline-item status-upcoming"><b>Part 5: Oct 20<br>Analytical Reflection (10%)</b> <br> Pair -->
+
+            <div class="timeline-item status-upcoming"><b>Part 5: Nov 24<br>Analytical Reflection (10%)</b> <br> Pair
+                Submission
+            </div>
+        </div>
+
+        <div class="current-focus">
+            <h3>🎯 Current Focus: Part 1: Proposal & Concept Development</h3>
+            <p><strong>Due:</strong> October 27 | <strong>Grace period:</strong> November 3 |
+                <strong>Submission:</strong>
+                Individual
+            </p>
+            <p>
+                Individually, submit a short proposal that outlines your concept for the GPS drawing you will
+                later create with your partner.
+                The goal of this step is to explore creative ideas and generate a set of concepts that can be
+                combined or refined in your collaborative project.
+
+            </p>
+        </div>
+
+        <div class="project-stages">
+            <div class="stage-card active">
+                <div class="stage-header" onclick="toggleStage('part1')">
+                    <div>
+                        <div class="stage-title">Part 1: Proposal & Concept Development</div>
+                        <div class="stage-meta">5% • Individual • Due October 27</div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="stage-content" id="part1">
+                    <div class="requirement-box">
+                        <!-- <strong>Status:</strong> <span class="status-badge status-active">Due</span> -->
+                        <strong>Status:</strong> <span class="status-badge status-active">Due</span>
+                        <br><strong>Due Date:</strong> October 27 by 11:59 PM. Submitting by this date ensures you
+                        receive detailed feedback from the professor.
+                        <br><strong>Grace Period:</strong> Until November 3 by 11:59 PM without penalty, but
+                        prof's feedback will not be provided.
+                        <br><strong>After Grade Period:</strong> Until November 10 by 11:59 pm. After the grace period,
+                        submissions are penalized 5% per
+                        day, including weekends. Submissions more than 7 days late will not be accepted and
+                        will receive a 0%.
+                        <br><strong>Submission Type:</strong> Individual
+                    </div>
+                    <!-- <div class="requirement-box">
+                        <strong>Status:</strong> <span class="status-badge status-completed">Completed</span>
+                    </div> -->
+
+                    <h3>What You Need to Do</h3>
+                    <div class="highlight">
+                        Individually, submit a short proposal that outlines your concept for the GPS drawing you will
+                        later create with your partner.
+                        The goal of this step is to explore creative ideas and generate a set of concepts that can be
+                        combined or refined in your collaborative project.
+                    </div>
+
+                    <hr>
+                    <h3>Learning Objectives</h3>
+
+                    <ul>
+                        <li>Generate creative concepts that connect theory from the readings from weeks 7–10 to
+                            movement and spatial patterns</li>
+                        <li>Develop skills in articulating artistic vision through written or video proposals</li>
+                        <li>Practice peer review and constructive feedback in creative contexts</li>
+                        <li>Begin connecting course concepts to your potential GPS drawing practice</li>
+                    </ul>
+
+                    <hr>
+                    <h3>Submission Instructions</h3>
+
+                    <ol>
+                        <li><b>Post your proposal</b> to the Avenue to Learn Discussion Forum under "Group Project 2 –
+                            Proposal & Concept Development".</li>
+                        <li><b>Provide peer feedback</b> to your project partner and one other student in the class by
+                            the same deadline or within the grace period. Feedback should be constructive and focused on
+                            improving the concept.</li>
+                    </ol>
+
+                    <h4>Proposal Requirements</h4>
+
+                    <ol>
+                        <li>Post either:</li>
+                        <ul>
+                            <li>Written proposal (300–500 words), OR</li>
+                            <li>Video pitch (2–4 minutes)</li>
+                        </ul>
+                        <li>Connect your concept to at least one reading from weeks 7–10.</li>
+                        <li>Include at least one illustrative element such as:</li>
+                        <ul>
+                            <li>Sketch or visualization of the intended GPS drawing/pattern</li>
+                            <li>Symbolic elements you want to include</li>
+                            <li>Brief notes on route ideas</li>
+                        </ul>
+                    </ol>
+
+                    <h4>Peer Feedback Requirements</h4>
+
+                    <h5>Provide constructive feedback (3-5 sentences each) to:</h5>
+                    <ul>
+                        <li>Your partner's post</li>
+                        <li>One other student in the class</li>
+                    </ul>
+
+                    <h5>Focus feedback on:</h5>
+                    <ul>
+                        <li>What is clear and engaging about the proposal</li>
+                        <li>Suggestions for improvement or development</li>
+                        <li>Connections you see (or could be made) to course readings and themes</li>
+                    </ul>
+
+                    <hr>
+                    <h3>Grace Period Advice</h3>
+
+                    <p><b>By October 27:</b> Post your proposal and provide feedback to your partner and one other
+                        student. Early submissions allow you to receive feedback while there are still more peer
+                        proposals available.</p>
+
+                    <p><b>October 28 – November 3 (grace period):</b> You can still submit your proposal and provide
+                        feedback, but fewer peers may be available for feedback exchange, and no detailed feedback will
+                        be provided for late submissions.</p>
+
+                    <hr>
+                    <h3>Assessment (Pass/Fail)</h3>
+
+                    <p><strong>Pass if:</strong></p>
+                    <ul>
+                        <li>You post your proposal on time (or within the grace period) with all required elements</li>
+                        <li>You provide constructive feedback to your partner and one other student on time (or within
+                            the grace period)</li>
+                    </ul>
+
+                    <p><strong>Fail if:</strong></p>
+                    <ul>
+                        <li>Your proposal is missing required elements, OR</li>
+                        <li>You fail to provide peer feedback</li>
+                    </ul>
+
+                </div>
+            </div>
+
+
+            <div class="stage-card upcoming">
+                <!-- <div class="stage-card upcoming"> -->
+                <div class="stage-header" onclick="toggleStage('part2')">
+                    <div>
+                        <div class="stage-title">Part 2: Materials Collection</div>
+                        <div class="stage-meta">5% • Individual • Due Nov 3</div>
+
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="stage-content" id="part2">
+                    <div class="requirement-box">
+                        <!-- <strong>Status:</strong> <span class="status-badge status-active">Due</span> -->
+                        <strong>Status:</strong> <span class="status-badge status-upcoming">Upcoming</span>
+                        <br><strong>Due Date:</strong> November 3 by 11:59 PM. Submitting by this date ensures you
+                        receive detailed feedback from the professor.
+                        <br><strong>Grace Period:</strong> Until November 10 by 11:59 PM without penalty, but
+                        prof's feedback will not be provided.
+                        <br><strong>After Grade Period:</strong> Until November 17 by 11:59 pm. After the grace period,
+                        submissions are penalized 5% per
+                        day, including weekends. Submissions more than 7 days late will not be accepted and
+                        will receive a 0%.
+                        <br><strong>Submission Type:</strong> Individual
+                    </div>
+
+
+                    <h3>What You Need to Do</h3>
+                    <div class="highlight">
+                        Individually, gather visual materials based on your Part 1 proposal concept.
+                        You will create <b>two mockups of the GPS drawing routes</b> you plan to walk, as well as
+                        <b>symbolic imagery</b>
+                        that could be incorporated into your final artistic composition. The goal is to explore creative
+                        possibilities,
+                        experiment with route patterns, and build a visual palette to share with your partner for Part
+                        3.
+                    </div>
+
+                    <hr>
+                    <h3>Learning Objectives</h3>
+
+                    <ul>
+                        <li>Develop technical skills in visual planning and mockup creation for site-specific GPS art
+                        </li>
+                        <li>Practice critical selection of materials for creative purposes</li>
+                        <li>Learn to document and annotate creative materials systematically</li>
+                        <li>Build foundations for collaborative decision-making in Part 3</li>
+                    </ul>
+
+                    <hr>
+                    <h3>Submission Instructions</h3>
+
+                    <ol>
+                        <li><b>Post your materials</b> to the Avenue to Learn Discussion Forum under "Group Project 2 –
+                            Materials Collection".</li>
+                        <li><b>Provide peer feedback</b> to your project partner and one other student in the class by
+                            the same deadline or grace period. Feedback should be constructive and focused on improving
+                            the concept and materials.</li>
+                    </ol>
+
+                    <h4>Materials Requirements</h4>
+
+                    <ul>
+                        <li><strong>Two mockup drawings</strong> of your proposed GPS route, showing the intended path
+                            or pattern:</li>
+                        <ul>
+                            <li>Can be hand-drawn sketches, digitally created diagrams, or maps annotated with your
+                                route</li>
+                            <li>Optional examples: screenshot of a drawing app, photo of a hand-drawn route, diagram of
+                                symbolic shapes to be traced on campus</li>
+                        </ul>
+                        <li><strong>Two symbolic materials</strong> (one per mockup) that represent elements you want to
+                            include in the final project:</li>
+                        <ul>
+                            <li>Can be images, icons, textures, or small sketches that convey ideas, themes, or patterns
+                                from your route</li>
+                        </ul>
+                        <li><strong>Annotations</strong> for each mockup and symbolic material (1–2 sentences each):
+                        </li>
+                        <ul>
+                            <li>Describe what the material shows or represents</li>
+                            <li>Explain how it connects to your concept and proposal from Part 1</li>
+                        </ul>
+                    </ul>
+
+                    <h4>Peer Feedback Requirements</h4>
+
+                    <h5>Provide constructive feedback (3–5 sentences each) to:</h5>
+                    <ul>
+                        <li>Your partner's submission</li>
+                        <li>One other student in the class</li>
+                    </ul>
+
+                    <h5>Focus feedback on:</h5>
+                    <ul>
+                        <li>Clarity and creativity of the mockups</li>
+                        <li>Relevance and potential of symbolic materials</li>
+                        <li>Annotations and explanation of concepts</li>
+                    </ul>
+
+                    <hr>
+                    <h3>Assessment (Pass/Fail)</h3>
+
+                    <p><strong>Pass if:</strong> You submit all required mockups and symbolic materials with clear
+                        annotations, and provide peer feedback on time (or within the grace period).</p>
+                    <p><strong>Fail if:</strong> Any materials or annotations are missing, or peer feedback is not
+                        provided.</p>
+
+                </div>
+
+
+            </div>
+
+            <!-- <div class="stage-card upcoming"> -->
+            <div class="stage-card upcoming">
+                <div class="stage-header" onclick="toggleStage('part3')">
+                    <div>
+                        <div class="stage-title">Part 3: Final Artistic Composition</div>
+                        <div class="stage-meta">10% • Pairs • Due Nov 10</div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="stage-content" id="part3">
+                    <div class="requirement-box">
+                        <!-- <strong>Status:</strong> <span class="status-badge status-active">Due</span> -->
+                        <strong>Status:</strong> <span class="status-badge status-upcoming">Upcoming</span>
+                        <br><strong>Due Date:</strong> November 10 by 11:59 PM. Submitting by this date ensures you
+                        receive detailed feedback from the professor.
+                        <br><strong>Grace Period:</strong> Until November 17 by 11:59 PM without penalty, but
+                        prof's feedback will not be provided.
+                        <br><strong>After Grade Period:</strong> Until November 24 by 11:59 pm. After the grace period,
+                        submissions are penalized 5% per
+                        day, including weekends. Submissions more than 7 days late will not be accepted and
+                        will receive a 0%.
+                        <br><strong>Submission Type:</strong> Pairs
+                    </div>
+
+                    <hr>
+                    <h3>What You Need to Do</h3>
+                    <div class="highlight">
+                        <p>
+                            Working in pairs, create your <strong>final GPS drawing composition</strong>. Your drawing
+                            should capture the route you physically walked and integrate the symbolic
+                            materials you collected in Part 2. Think of this as a visual “breadcrumb trail” that
+                            reflects movement, space, and everyday mobility, with the GPS route as the highlight of your
+                            artwork.
+                        </p>
+                        <p>
+                            You will submit a single <strong>PDF landscape composition</strong> (11"x8.5" or A4
+                            landscape) where you can digitally combine:
+                        </p>
+                        <ul>
+                            <li>The photographed route you walked</li>
+                            <li>Images of your GPS drawing mockup</li>
+                            <li>Symbolic elements or small sketches collected in Part 2</li>
+                        </ul>
+                        <p>
+                            The goal is to create a cohesive, visually engaging final piece that communicates your
+                            concept and artistic decisions.
+                        </p>
+                    </div>
+
+                    <hr>
+                    <h3>Learning Objectives</h3>
+                    <ul>
+                        <li>Collaborate effectively to synthesize individual mockups and symbolic materials into a
+                            cohesive artistic composition</li>
+                        <li>Develop technical skills in combining photographic, drawn, and digital elements</li>
+                        <li>Practice creating a visually compelling representation of movement through space</li>
+                        <li>Articulate creative decisions, choices, and challenges in a written artist statement</li>
+                    </ul>
+
+                    <hr>
+                    <h3>Suggested Workflow</h3>
+                    <ul>
+                        <li>Review Part 1 proposals and Part 2 materials</li>
+                        <ul>
+                            <li>Discuss strengths, weaknesses, and possibilities of each idea</li>
+                            <li>Decide which route to walk and which symbolic elements to integrate</li>
+                        </ul>
+                        <li>Walk your chosen GPS route on campus</li>
+                        <ul>
+                            <li>Capture photographic documentation along the route for artistic use</li>
+                        </ul>
+                        <li>Create your final composition</li>
+                        <ul>
+                            <li>Use tools like Canva, Photoshop, or Illustrator to combine the photographed route, GPS
+                                mockup, and symbolic elements into a single PDF landscape composition</li>
+                            <li>Ensure the GPS route is the centerpiece and symbolic elements enhance the narrative or
+                                theme</li>
+                        </ul>
+                        <li>Write an artist statement (1–2 pages, 300–500 words) reflecting on your decisions</li>
+                    </ul>
+
+                    <hr>
+                    <h3>Submission Requirements (Per Group)</h3>
+                    <ol>
+                        <li>Final GPS drawing composition uploaded as a <strong>PDF landscape file</strong> to Avenue to
+                            Learn dropbox "Group Project 2 – Part 3: Final Artistic Composition"</li>
+                        <li>Artist statement (1–2 pages, 300–500 words) uploaded to the same folder</li>
+                    </ol>
+
+                    <h4>Artist Statement Requirements</h4>
+                    <ul>
+                        <li>Which GPS drawing route was chosen and why</li>
+                        <li>How symbolic materials were integrated into the final composition</li>
+                        <li>Connection to course readings and themes from weeks 7–10</li>
+                        <li>Creative decisions, challenges, and any changes from the original proposal</li>
+                    </ul>
+
+                    <hr>
+                    <h3>Assessment (10%)</h3>
+                    <table class="assessment-table">
+                        <tr>
+                            <th>Criterion</th>
+                            <th>Description</th>
+                            <th>Weight</th>
+                        </tr>
+                        <tr>
+                            <td>Cohesion & Flow</td>
+                            <td>The composition integrates GPS route, photographs, and symbolic elements thoughtfully;
+                                the piece feels intentional and visually engaging</td>
+                            <td>2.5%</td>
+                        </tr>
+                        <tr>
+                            <td>Creativity & Concept</td>
+                            <td>Demonstrates originality in combining route and symbolic materials; effectively engages
+                                course themes from weeks 7–10</td>
+                            <td>2.5%</td>
+                        </tr>
+                        <tr>
+                            <td>Material Selection & Relevance</td>
+                            <td>Mockups, symbolic materials, and photos are carefully chosen and clearly connected to
+                                the concept and route</td>
+                            <td>2.5%</td>
+                        </tr>
+                        <tr>
+                            <td>Artist Statement</td>
+                            <td>Clearly explains concept development, material choices, creative decisions, and any
+                                changes from the original proposal</td>
+                            <td>2.5%</td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="stage-card upcoming">
+                <div class="stage-header" onclick="toggleStage('part4')">
+                    <div>
+                        <div class="stage-title">Part 4: In-Class Exhibition</div>
+                        <div class="stage-meta">5% • Pairs • Nov 18 (In-class Participation)</div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="stage-content" id="part4">
+                    <div class="requirement-box">
+                        <strong>Status:</strong> <span class="status-badge status-upcoming">Upcoming</span>
+                        <!-- <strong>Status:</strong> <span class="status-badge status-active">In Progress</span> -->
+                        <br><strong>Due:</strong> October 7 (in-class activity)
+                        <br><strong>No grace period</strong> - must attend class
+                        <br><strong>Submission Type:</strong> Pair Participation
+                    </div>
+                    <hr>
+                    <h3>What You Need to Do</h3>
+                    <div class="highlight">
+                        <p>
+                            Each team's GPS drawing composition will be exhibited for the class. Students will explore
+                            different drawings in class, view photographic documentation, and interact with the
+                            symbolic elements included in the compositions. During the exhibition, you will provide
+                            constructive oral feedback to your peers. The full class period is dedicated to this
+                            hands-on exhibition experience.
+                        </p>
+                    </div>
+
+                    <hr>
+                    <h3>Learning Objectives</h3>
+                    <ul>
+                        <li>Experience and critically engage with peer-created site-specific artworks</li>
+                        <li>Develop skills in providing constructive feedback on creative and visual work</li>
+                        <li>Practice spatial awareness and observation through the GPS drawing compositions</li>
+                        <li>Learn to articulate responses to artistic work in oral discussion</li>
+                    </ul>
+
+                    <hr>
+                    <h3>Exhibition Structure</h3>
+                    <p>
+                        The exhibition will take the form of a <strong>project fair</strong>. Half of the teams will set
+                        up at designated booths with their laptops to showcase their GPS drawing compositions and
+                        associated materials. During the first hour, the other half of the class will circulate among
+                        the booths, explore the projects, and take notes.
+                    </p>
+                    <p>
+                        After the first hour, the teams will switch roles: those who were circulating will now take the
+                        booths to present their work, while the first group circulates to explore and observe new
+                        projects.
+                    </p>
+                    <p>
+                        The fair will be followed by a brief classroom discussion to share reflections and highlight
+                        insights from the exhibition.
+                    </p>
+
+                    <!-- <h4>What to Bring</h4>
+                    <ul>
+                        <li>Smartphone or tablet to view peer compositions digitally (photos, PDFs, or links)</li>
+                        <li>Notebook to take notes about the drawings and symbolic elements</li>
+                        <li>Optional: Camera to capture any interesting perspectives while exploring the routes</li>
+                    </ul> -->
+
+                    <h4>Exhibition Participation</h4>
+                    <ul>
+                        <li>Be present for the full 2 hours of class</li>
+                        <li>Experience the different GPS drawing compositions created by your peers</li>
+                        <li>Actively engage by observing the compositions and providing or taking notes for feedback
+                        </li>
+                    </ul>
+
+                    <h4>Feedback Requirements</h4>
+                    <p>After exploring each composition, provide constructive oral feedback to the presenting team,
+                        focusing on:</p>
+                    <ul>
+                        <li>Specific observations about what worked well visually and conceptually</li>
+                        <li>Concrete suggestions for improving composition, clarity, or integration of symbolic elements
+                        </li>
+                        <li>Questions about creative choices, route decisions, or presentation</li>
+                        <li>Connections to course themes and readings from weeks 7–10</li>
+                    </ul>
+
+                    <h4>Example Feedback Prompts</h4>
+                    <ul>
+                        <li>Which aspects of the GPS drawing did you find most engaging, surprising, or
+                            thought-provoking?</li>
+                        <li>How did the route and symbolic elements contribute to your understanding of movement and
+                            space?</li>
+                        <li>Were the visual elements integrated cohesively? Did the composition feel intentional?</li>
+                        <li>How did the work make you see the campus differently or notice new details?</li>
+                        <li>What specific adjustments could enhance clarity, creativity, or impact?</li>
+                        <li>How effectively did the work connect to course themes from weeks 7–10?</li>
+                    </ul>
+
+                    <hr>
+                    <h3>Assessment (5%)</h3>
+                    <table class="assessment-table">
+                        <tr>
+                            <th>Criterion</th>
+                            <th>Description</th>
+                            <th>Weight</th>
+                        </tr>
+                        <tr>
+                            <td>Active Participation</td>
+                            <td>Full attendance and engaged observation during at least 2 GPS drawing compositions;
+                                demonstrates thoughtful attention to peer work</td>
+                            <td>2.5%</td>
+                        </tr>
+                        <tr>
+                            <td>Constructive Feedback</td>
+                            <td>Provides specific, actionable feedback to at least 2 teams; offers concrete observations
+                                and suggestions rather than general comments</td>
+                            <td>2.5%</td>
+                        </tr>
+                    </table>
+
+
+                </div>
+            </div>
+
+            <!-- <div class="stage-card upcoming"> -->
+            <div class="stage-card upcoming">
+                <div class="stage-header" onclick="toggleStage('part5')">
+                    <div>
+                        <div class="stage-title">Part 5: Analytical Reflection</div>
+                        <div class="stage-meta">10% • Pairs • Due Nov 24</div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="stage-content" id="part5">
+                    <div class="requirement-box">
+                        <strong>Status:</strong> <span class="status-badge status-upcoming">Upcoming</span>
+                        <br><strong>Due Date:</strong> November 24 by 11:59 PM. Submitting by this date ensures you
+                        receive detailed feedback from the professor.
+                        <br><strong>Grace Period:</strong> Until December 1st by 11:59 PM without penalty, but
+                        prof's feedback will not be provided.
+                        <br><strong>After Grade Period:</strong> Until December 8 by 11:59 pm. After the grace period,
+                        submissions are penalized 5% per
+                        day, including weekends. Submissions more than 7 days late will not be accepted and
+                        will receive a 0%.
+                        <br><strong>Submission Type:</strong> Pairs
+
+                    </div>
+
+
+                    <hr>
+                    <h3>What You Need to Do</h3>
+                    <div class="highlight">
+                        <p>
+                            In this final reflection, your team will analyze your experience creating the GPS drawing
+                            composition, incorporating personal insights, technical reflections, and connections to
+                            course concepts. This is your opportunity to examine how the process shaped your
+                            understanding of space, mobility, creative collaboration, and artistic presentation through GPS art.
+                        </p>
+                    </div>
+
+                    <hr>
+                    <h3>Learning Objectives</h3>
+                    <ul>
+                        <li>Critically analyze your creative process and technical decisions</li>
+                        <li>Reflect on how GPS drawing and site-specific visual art can reveal new perspectives on
+                            familiar spaces</li>
+                        <li>Evaluate peer feedback and integrate insights from others’ creative approaches</li>
+                        <li>Connect your artistic practice to broader themes in mobility, space, and technology</li>
+                    </ul>
+
+                    <hr>
+                    <h3>Submission Requirements Per Team</h3>
+                    <ol>
+                        <li><strong>800-1000 words</strong> double-spaced analytical reflection per team submitted on
+                            Avenue to Learn's dropbox "Part 5 – Analytical Reflection"</li>
+                        <ul>
+                            <li>Submit only <strong>one PDF or Word</strong> document per team</li>
+                            <li>Cover page is optional</li>
+                            <li>Use <strong>clear headings</strong> to organize your sections</li>
+                            <li>Provide <strong>specific examples</strong> from your GPS drawing, photographic
+                                documentation, symbolic elements, and exhibition experience</li>
+                            <li>Provide <strong>APA citations</strong> if referencing course materials</li>
+                        </ul>
+                    </ol>
+
+                    <hr>
+                    <h3>Content Areas to Address</h3>
+                    <ol>
+                        <li>
+                            <h4>Personal Creative Insights</h4>
+                            <ul>
+                                <li>How did creating the GPS drawing change your understanding of movement and spatial
+                                    experience?</li>
+                                <li>How did making the project deepen your understanding of course themes and readings
+                                    from Weeks 7–10?</li>
+                                <li>What did you discover about your own creative process and collaboration with your
+                                    partner?</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h4>Technical Process Analysis</h4>
+                            <ul>
+                                <li>Discuss your <b>route planning and walking process</b>, including any challenges in
+                                    executing the GPS drawing</li>
+                                <li>Discuss your <b>photographic or digital documentation</b> process and software used
+                                    (e.g., Canva) for combining images and symbolic elements</li>
+                                <li>Discuss how <b>technical tools and constraints</b> influenced your creative choices
+                                    and composition</li>
+                                <li>Reflect on any problem-solving or adjustments made during the creation of your final
+                                    artwork</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h4>Peer Learning Integration</h4>
+                            <ul>
+                                <li>How did you respond to feedback received during the exhibition/project fair?</li>
+                                <li>What would you change based on peer input given during the exhibition?</li>
+                                <li>How did this feedback process contribute to your learning and understanding of GPS
+                                    drawing as an artistic practice?</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h4>Critical Comparison</h4>
+                            <p>Reflect on other GPS drawing compositions you experienced during the exhibition, focusing
+                                on:</p>
+                            <ul>
+                                <li>The different <b>technical or creative approaches</b> used by other teams (e.g.,
+                                    route design, symbolic elements, digital presentation)</li>
+                                <li>How explicitly other teams connected their drawings to course readings or themes
+                                    from Weeks 7–10</li>
+                                <li>The <b>clarity and cohesion</b> of each composition</li>
+                                <li>Any creative <b>innovations</b> that impressed or inspired you</li>
+                                <li><b>What these comparisons taught you</b> about GPS drawing and visual/physical art
+                                    in public spaces</li>
+                                <li><b>What you found effective</b> or less effective in other teams' work</li>
+                                <li><b>How their approaches influenced your thinking</b> about creating and presenting
+                                    your own composition</li>
+                            </ul>
+                        </li>
+                    </ol>
+
+                    <hr>
+                    <h3>Assessment (10%)</h3>
+                    <table class="assessment-table">
+                        <tr>
+                            <th>Criterion</th>
+                            <th>Description</th>
+                            <th>Weight</th>
+                        </tr>
+                        <tr>
+                            <td>Personal Creative Insights</td>
+                            <td>Demonstrates genuine reflection on how the project changed your perspective on space,
+                                mobility, and creative process; shows self-awareness about learning</td>
+                            <td>2.5%</td>
+                        </tr>
+                        <tr>
+                            <td>Technical Process Analysis</td>
+                            <td>Thoughtful analysis of route planning, documentation, and digital composition challenges
+                                and decisions; connects technical choices to creative outcomes</td>
+                            <td>2.5%</td>
+                        </tr>
+                        <tr>
+                            <td>Peer Learning Integration</td>
+                            <td>Meaningful engagement with feedback received and insights gained from experiencing
+                                others' work; shows ability to learn from peers</td>
+                            <td>2.5%</td>
+                        </tr>
+                        <tr>
+                            <td>Critical Comparison</td>
+                            <td>Insightful analysis of different creative and technical approaches observed in peer
+                                works; demonstrates understanding of various possibilities in GPS drawing and public art
+                            </td>
+                            <td>2.5%</td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleStage(stageId) {
+            const content = document.getElementById(stageId);
+            const icon = content.previousElementSibling.querySelector('.expand-icon');
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                // Close all other stages
+                const allContents = document.querySelectorAll('.stage-content');
+                const allIcons = document.querySelectorAll('.expand-icon');
+                allContents.forEach(c => c.classList.remove('expanded'));
+                allIcons.forEach(i => i.style.transform = 'rotate(0deg)');
+
+                // Open clicked stage
+                content.classList.add('expanded');
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // Auto-expand current active stage on load
+        document.addEventListener('DOMContentLoaded', function () {
+            const activeStage = document.querySelector('.stage-card.active .stage-content');
+            if (activeStage) {
+                activeStage.classList.add('expanded');
+            }
+        });
+    </script>
+</body>
+
+</html>
