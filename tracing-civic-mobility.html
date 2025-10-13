@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Tracing Civic Mobility Workshops</title>
+
+    <!-- Vuetify & Vue CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@3.6.11/dist/vuetify.min.css" rel="stylesheet" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@3.6.11/dist/vuetify.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Funnel+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Lato', sans-serif;
+            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+            color: #fff;
+        }
+
+        .gradient {
+            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%) !important;
+            color: white !important;
+
+        }
+
+        .v-navigation-drawer {
+            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%) !important;
+            color: white !important;
+            font-size: 1.5em !important;
+        }
+
+        .v-navigation-drawer .v-list-item:hover {
+            background: #454545 !important;
+            color: white !important;
+        }
+
+
+
+        h1 {
+            font-size: 1.75rem;
+            color: #fff3f3;
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: #ffe5e5;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            color: #ffd6d6;
+            font-weight: 500;
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            color: #ffd6d6;
+            font-weight: 500;
+        }
+
+        h5 {
+            font-size: 1rem;
+            color: #ffd6d6;
+        }
+
+        .intro-section {
+            font-size: 1.25rem;
+            margin: 1.5rem;
+            line-height: 1.6;
+            color: #fff0f0;
+        }
+
+        .coming-soon-card {
+            margin: 20px auto;
+            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+            color: white;
+        }
+
+        .step-card {
+            margin: 20px auto;
+            padding: 1rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            color: #4d001f;
+        }
+
+        .step-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .example {
+            border: none;
+            padding: 20px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #ffb6c1 0%, #ff7f50 100%);
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(255, 65, 108, 0.2);
+            border-left: 4px solid #ff416c;
+        }
+
+        .example strong {
+            color: #ff4b2b;
+            font-size: 1.1rem;
+        }
+
+        .custom-details summary {
+            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+            color: white;
+        }
+
+        .custom-details summary:hover {
+            background: linear-gradient(135deg, #ff4b2b 0%, #ff416c 100%);
+        }
+
+        .custom-details[open] summary {
+            border-bottom: 2px solid rgba(255, 65, 108, 0.2);
+        }
+
+        .details-content {
+            padding: 24px;
+            background: linear-gradient(135deg, #ffe6eb 0%, #ffc2b3 100%);
+            border-top: 1px solid rgba(255, 65, 108, 0.3);
+            color: #4d001f;
+        }
+
+        .section-divider {
+            margin: 32px 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, #ff416c 50%, transparent 100%);
+            border-radius: 1px;
+        }
+
+        .learning-objectives {
+            background: linear-gradient(135deg, #ffccd5 0%, #ff9990 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(255, 65, 108, 0.2);
+            border-left: 4px solid #ff416c;
+            color: #4d001f;
+
+        }
+
+        .learning-objectives h3,
+        .tools-section h3 {
+            color: #4d001f;
+        }
+
+        .tools-section {
+            background: linear-gradient(135deg, #ffb3b3 0%, #ff7f50 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(255, 75, 43, 0.2);
+            border-left: 4px solid #ff4b2b;
+            color: #4d001f;
+        }
+
+        .learning-objectives ul,
+        .tools-section ul {
+            margin-left: 1.5rem;
+            /* or try padding-left: 1.5rem; */
+            padding-left: 1.2rem;
+            list-style-position: inside;
+        }
+
+        .learning-objectives li,
+        .tools-section li {
+            margin-bottom: 0.5rem;
+        }
+
+
+        a {
+            color: #ff416c;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: #ff4b2b;
+            text-decoration: underline;
+        }
+
+        code {
+            background: linear-gradient(135deg, #fff0f0 0%, #ffd6d6 100%);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            color: #ff416c;
+            font-weight: 600;
+        }
+
+        /* ---------- STEP STYLING ---------- */
+
+        .step-section {
+            margin: 3rem 0;
+            padding: 1.5rem;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 8px 30px rgba(255, 65, 108, 0.15);
+            color: #4d001f;
+            border-left: 6px solid #ff416c;
+            transition: all 0.3s ease;
+        }
+
+        .step-section:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(255, 75, 43, 0.25);
+        }
+
+        .step-section h3 {
+            font-size: 1.3rem;
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .step-section h3 .v-icon {
+            -webkit-text-fill-color: initial;
+            background: none;
+            color: #ff4b2b;
+            /* or #ff416c */
+        }
+
+        .step-section .objective-box {
+            background: linear-gradient(135deg, #ffe6eb 0%, #ffc2b3 100%);
+            border-radius: 10px;
+            padding: 12px 16px;
+            border-left: 4px solid #ff416c;
+            margin: 1rem 0 1.5rem;
+            font-weight: 500;
+        }
+
+        /* ---------- LIST STYLING ---------- */
+
+        .step-section ol {
+            list-style: decimal inside;
+            counter-reset: item;
+            padding-left: 1.2rem;
+            line-height: 1.6;
+            margin: 1rem 0;
+        }
+
+        .step-section ol>li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .step-section ol>li::marker {
+            color: #ff416c;
+            font-weight: bold;
+        }
+
+        .step-section ul {
+            list-style: disc;
+            margin-left: 1.5rem;
+            padding-left: 0.5rem;
+            margin-top: 0.4rem;
+        }
+
+        .step-section ul li::marker {
+            color: #ff4b2b;
+        }
+
+        /* ---------- DIVIDER ENHANCEMENT ---------- */
+
+        .section-divider {
+            margin: 3rem 0 1.5rem;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, #ff416c 40%, #ff4b2b 60%, transparent 100%);
+            border-radius: 1px;
+        }
+
+        .wrap-title {
+            white-space: normal;
+            /* allow wrapping */
+            word-break: break-word;
+            /* break long words if needed */
+        }
+
+        .styled-list {
+            list-style: none;
+            /* removes default bullets */
+            padding-left: 0;
+            /* optional, remove default indentation */
+        }
+
+        .styled-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            /* space for custom bullet */
+            margin: 0.75rem 0;
+        }
+
+        .styled-list li::before {
+            content: '🎯';
+            /* emoji or icon for bullet */
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 1.2rem;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <!-- Baseline Layout -->
+    <div id="app">
+        <v-app>
+
+            <!-- App Bar -->
+            <v-app-bar class="gradient" dark elevation="8">
+                <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+                <v-toolbar-title>Tracing Civic Mobility Workshops</v-toolbar-title>
+            </v-app-bar>
+
+            <!-- Navigation Drawer -->
+            <v-navigation-drawer v-model="drawer" temporary>
+                <v-list density="compact" nav>
+                    <v-list-item @click="tab = 0">
+                        <v-list-item-icon>
+                            <v-icon>mdi-home</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                            <v-list-item-title class="wrap-title">Home</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
+                    <v-list-item v-for="(workshop, i) in workshops" :key="i" @click="tab = i + 1">
+                        <v-list-item-icon>
+                            <v-icon>{{ workshop.icon }}</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                            <v-list-item-title class="wrap-title">{{ workshop.title }}</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list>
+            </v-navigation-drawer>
+
+
+            <!-- Main Content -->
+            <v-main>
+                <v-container class="py-10">
+                    <v-window v-model="tab">
+                        <!-- Home -->
+                        <v-window-item value="0">
+
+                            <div class="intro-section">
+                                <h1 class="mb-4">Tracing Civic Mobility Workshops</h1>
+
+                                <p>Welcome to a series of workshops where your footsteps and daily
+                                    movements become works of art. Here, McMaster University transforms into a canvas,
+                                    and
+                                    every route you trace tells a story about mobility, activism and civic life.</p>
+                                <br>
+
+                                <p>Through hands-on activities, you’ll explore GPS Art, experiment with tools like
+                                    Strava and Canva, and discover how personal experiences of mobility can intersect
+                                    with themes like activism, social displacement, and civic engagement.</p>
+
+                                <br>
+                                <ul class="styled-list">
+                                    <li>Experiment creatively with movement and GPS data using tools like Strava and
+                                        Canva for <b>Group Project 2</b>.</li>
+                                </ul>
+
+
+                                <v-img src="/images/home-soundwalk.jpg" alt="A strava art" class="my-6 rounded-lg"
+                                    max-width="800" />
+                            </div>
+
+                        </v-window-item>
+
+                        <!-- Workshop 1 -->
+                        <v-window-item value="1">
+                            <h2>{{ workshops[0].title }}</h2>
+                            <div class="intro-section">
+                                <p>In this workshop, you will explore the practice of GPS Art by following a route that
+                                    forms a drawing inspired by the theme of mobile subjects, particularly homelessness
+                                    in Hamilton. Through this activity, you will generate your own
+                                    GPS data, see how motion translates into visual art, and start developing your own
+                                    concept for Part 1: Proposal and Concept Development.</p>
+                                <br>
+
+                                <h3><v-icon color="primary" class="mr-2">mdi-map</v-icon>What is GPS Drawing?</h3>
+                                <p>Also known as GPS art, GPS drawing is a method where an artist uses a Global
+                                    Positioning System (GPS) device to follow a pre-planned route and create a
+                                    large-scale picture or pattern. The .GPX data recorded during the drawing process is
+                                    visualized as a line on a map. Artists often run or cycle the route, while cars,
+                                    boats, or planes can be used for larger artworks. <a
+                                        href="https://en.wikipedia.org/wiki/GPS_drawing" target="_blank">Learn more</a>.
+                                </p>
+
+                                <br>
+                                <div class="learning-objectives">
+                                    <h3><v-icon color="primary" class="mr-2">mdi-target</v-icon>Learning Objectives</h3>
+                                    <ul>
+                                        <li>Understand the concept and process of GPS Art.</li>
+                                        <li>Experience creating GPS data for artistic purposes using Strava.</li>
+                                        <li>Reflect on your route and other artists’ GPS drawings.</li>
+                                        <li>Generate ideas for the Part 1: Proposal and Concept Development assignment.
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <br>
+                                <div class="tools-section">
+                                    <h3><v-icon color="primary" class="mr-2">mdi-tools</v-icon>Tools you'll use</h3>
+                                    <ul>
+                                        <li>Strava app on your smartphone</li>
+                                        <li>Strava desktop dashboard</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Steps -->
+
+                            <br>
+                            <div class="section-divider"></div>
+                            <div class="step-section">
+
+                                <h3><v-icon color="primary" class="mr-2">mdi-walk</v-icon>1: Follow
+                                    the Route and Collect GPS Data</h3>
+
+                                <div class="objective-box">
+                                    <strong>Objective:</strong> Follow a route and trace your
+                                    steps by recording the GPS data using Strava, an app and online platform for
+                                    tracking physical activity.
+                                </div>
+
+                                <p>Follow these steps:</p>
+                                <ol>
+                                    <li>Install the Strava app in your
+                                        cellphone.
+                                        <ul>
+                                            <li> Link to Strava app in Apple store: <a
+                                                    href="https://apps.apple.com/us/app/strava-run-bike-walk/id426826309"
+                                                    target="_blank">Install
+                                                    Strava App</a>
+                                            </li>
+
+                                            <li>Link to Strava app in Google Play Store: <a
+                                                    href="https://play.google.com/store/apps/details?id=com.strava&hl=en_CA"
+                                                    target="_blank">Install
+                                                    Strava App</a>
+
+                                                <v-img src="images/gps-art/strava-app.jpeg" alt="Strava app screenshot"
+                                                    class="my-4 rounded-lg" width="20%" />
+                                            </li>
+
+                                        </ul>
+
+                                    </li>
+
+
+                                    <li>
+                                        Follow the route the professor will provide you with and record your
+                                        steps/GPS with the Strava app.
+                                        <ul>
+                                            <li>Ask for the printed route/map to the professor.
+                                                <v-img src="images/gps-art/drawing-route.png" alt="Route of drawing"
+                                                    class="mx-2 rounded-lg" max-width="60%" />
+                                            </li>
+                                            <li>
+                                                Click "Record" → "Start" in the Strava app to record your steps data
+                                                when you start
+                                                walking the route in the map.
+                                                <v-img src="images/gps-art/strava-app-record.png"
+                                                    alt="Strava app record button screenshot" class="mx-2 rounded-lg"
+                                                    max-width="40%" />
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    <li>Once you have finished walking the route, click "Stop" → "Finish" to stop and
+                                        save the recording in Strava.
+                                        Then, come
+                                        back
+                                        to the classroom.
+
+                                        <v-img src="images/gps-art/strava-app-stop.png"
+                                            alt="Strava app record button screenshot" class="mx-2 rounded-lg"
+                                            max-width="20%" />
+                                    </li>
+                                </ol>
+                            </div>
+
+
+
+                            <div class="section-divider"></div>
+                            <div class="step-section">
+
+
+                                <h3><v-icon color="primary" class="mr-2">mdi-account-group</v-icon>2:
+                                    Share Your GPS Drawing With The Class</h3>
+                                <div class="objective-box">
+                                    <strong>Objective:</strong> Share your GPS drawing from Strava with the class to to
+                                    see
+                                    the final results.
+                                </div>
+                                <ol>
+                                    <li>Download the drawing by click the share icon → "Share To" → "Save to Files".
+                                        <v-img src="images/gps-art/strava-app-share.png"
+                                            alt="Strava app record button screenshot" class="mx-2 rounded-lg"
+                                            max-width="40%" />
+                                    </li>
+
+                                    <li>Post your drawing in the following whiteboard:
+                                        <a href="https://tinyurl.com/collectiveGPSart"
+                                            target="_blank">https://tinyurl.com/collectiveGPSart</a>
+                                            <ul>
+                                                <li>If needed, send your drawing to your email to transfer it from your phone to your laptop for posting.</li>
+                                            </ul>
+
+                                    </li>
+
+                                </ol>
+                            </div>
+                            <div class="section-divider"></div>
+                            <div class="step-section">
+
+                                <h3><v-icon color="primary" class="mr-2">mdi-file-document-outline</v-icon>3:
+                                    Develop Your Proposal and Concept</h3>
+                                <div class="objective-box">
+                                    <strong>Objective:</strong> Use your experience following the route to start writing
+                                    Project 2, Part 1: Proposal & Concept Development.
+
+                                </div>
+
+                                <p>Follow the next steps to start drafting ideas that will form the basis of your Part
+                                    1:
+                                    Proposal and Concept Development assignment.</p>
+
+                                <ol>
+                                    <li>Look at the course outline and explore the readings from weeks 7-10.
+                                        <ul>
+                                            <li>What topics call your attention (e.g., activism and mobility, migration,
+                                                social mobility, or forced displacement)?</li>
+                                            <li>What topics do you feel drawn to because of personal memories, news
+                                                you have seen recently, or global events that inspire you to reflect on
+                                                movement, borders, and displacement?</li>
+
+
+                                        </ul>
+                                    </li>
+                                    <li>Watch the two videos below to learn about other artists and activists creating
+                                        GPS
+                                        art:
+                                        <ul style="display: flex; flex-direction: column; align-items: center;">
+                                            <li><iframe width="560" height="315"
+                                                    src="https://www.youtube.com/embed/dgu2iLWX3PE?si=nwHz7TcrJ48NQ49t"
+                                                    title="YouTube video player" frameborder="0"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                    referrerpolicy="strict-origin-when-cross-origin"
+                                                    allowfullscreen></iframe></li>
+                                            <li><iframe width="560" height="315"
+                                                    src="https://www.youtube.com/embed/KeHO_dVyaOs?si=w5BpqBVVSEVuj62d"
+                                                    title="YouTube video player" frameborder="0"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                    referrerpolicy="strict-origin-when-cross-origin"
+                                                    allowfullscreen></iframe></li>
+                                        </ul>
+                                    </li>
+                                    <li>Reflect on your experience following the route:
+                                        <ul>
+                                            <li>How can a large, route-based drawing inspire activism or bring attention
+                                                to issues such as
+                                                homelessness, accessibility, gentrification, or migration policies that
+                                                shape the movement
+                                                of people in your city or community?</li>
+                                        </ul>
+                                    </li>
+
+
+
+                                    <li>Once you have selected a topic and have ideated a concept for your drawing,
+                                        start
+                                        drafting your Project 2, Part 1: Proposal & Concept Development:
+                                        <ul>
+                                            <li>See guidelines in the following link under section "Part 1: Proposal &
+                                                Concept Development": <a
+                                                    href="https://cmstmac.github.io/CMST3Z03/group-project-2"
+                                                    target="_blank">https://cmstmac.github.io/CMST3Z03/group-project-2</a>
+                                            </li>
+                                            <li>There is nothing to submit for this step yet. Continue writing and
+                                                refining your proposal at home,
+                                                and post it on A2L by the date indicated in the guidelines for Group
+                                                Project 2 above.</li>
+                                        </ul>
+                                </ol>
+                            </div>
+
+                        </v-window-item>
+
+                        <!-- Workshop 2 -->
+                        <v-window-item value="2">
+                            <h2>{{ workshops[1].title }}</h2>
+
+                            <p>Coming soon!</p>
+
+                        </v-window-item>
+
+                        <!-- Workshop 3 -->
+                        <v-window-item value="3">
+                            <h2>{{ workshops[2].title }}</h2>
+
+                            <p>Coming soon!</p>
+                        </v-window-item>
+
+                    </v-window>
+                </v-container>
+            </v-main>
+        </v-app>
+    </div>
+    <script src="appProjectTwo.js"></script>
+
+</body>
+
+</html>
