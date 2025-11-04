@@ -9,7 +9,7 @@ const App = {
       workshops: [
         { title: "Workshop 1: Collective GPS Drawing and Experimentation", icon: "mdi-walk" },
         { title: "Workshop 2: Designing Your GPS Drawing and Planning Your Route", icon: "mdi-map" },
-        { title: "Workshop 3: Enhance Your Drawing with Multimedia Annotation", icon: "mdi-camcorder" }
+        { title: "Workshop 3: Enhance Your GPS Drawing with Multimedia Annotations", icon: "mdi-camcorder" }
       ]
     };
   }
